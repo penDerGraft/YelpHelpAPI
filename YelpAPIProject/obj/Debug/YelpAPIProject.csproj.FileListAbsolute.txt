@@ -68,3 +68,4 @@ Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\bin\zh-Hans\System.Spatial.resour
 Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\bin\zh-Hant\System.Spatial.resources.dll
 Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\obj\Debug\YelpAPIProject.dll
 Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\obj\Debug\YelpAPIProject.pdb
+Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\obj\Debug\YelpAPIProject.csprojResolveAssemblyReference.cache

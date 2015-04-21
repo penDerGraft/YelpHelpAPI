@@ -6,17 +6,20 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace YelpAPIProject.Models
 {
-    public class CityContextInitializer : DropCreateDatabaseIfModelChanges<CityContext>
+    public class CityContextInitializer : DropCreateDatabaseAlways<CityContext>
 
     {
         protected override void Seed(CityContext context)
         {
-            //var citiesList = new List<City>();
+            var citiesList = new List<City>();
 
-            using (StreamReader reader = File.OpenText(@"Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\data.json"))
+            // @"Y:\web_projects\ASP.NET\YelpAPI\YelpAPIProject\data.json"
+            // HostingEnvironment.MapPath(@"~/App_Data/Food_Display_Table.xml")
+            using (StreamReader reader = File.OpenText(HostingEnvironment.MapPath(@"~/data.json")))            
             {
                 JObject json = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
 
@@ -30,6 +33,7 @@ namespace YelpAPIProject.Models
                     newCity.name = (string)item["name"];
                     newCity.state = (string)item["state"];
                     newCity.totalRestaurants = (int)item["total"];
+                    newCity.restaurants = new List<Restaurant>();
 
                     foreach (var jRes in item["businesses"])
                     {
@@ -43,24 +47,25 @@ namespace YelpAPIProject.Models
                         rest.address = string.Join(" ", addr);                        
 
                         restaurants.Add(rest);
+                        newCity.restaurants.Add(rest);
                     }
 
-                    newCity.restaurants = restaurants;
+                    
 
-                    //context.Cities.Add(newCity);
+                    citiesList.Add(newCity);
                 }
                
                 //City city = new City { ID = 1, name = (string)json["name"], 
                 //     state = (string)json["state"], totalRestaurants = (int)json["total"] };
 
                 //context.Cities.Add(city);
-
+                
                 restaurants.ForEach(r => context.Restaurants.Add(r));
                 
             }
 
             
-            //citiesList.ForEach(c => context.Cities.Add(c));            
+            citiesList.ForEach(c => context.Cities.Add(c));            
             context.SaveChanges();
         }
 

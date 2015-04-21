@@ -19,7 +19,7 @@ namespace YelpAPIProject.Controllers
         // GET api/City
         public IEnumerable<City> GetCities()
         {
-            return db.Cities.AsEnumerable();
+            return db.Cities.Include(c => c.restaurants);                            
         }
 
         // GET api/City/5

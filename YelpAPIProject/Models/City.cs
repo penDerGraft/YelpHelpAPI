@@ -15,5 +15,10 @@ namespace YelpAPIProject.Models
         public string state { get; set; }
         public int totalRestaurants { get; set; }
         public List<Restaurant> restaurants { get; set; }
+
+        //public City()
+        //{
+        //    this.restaurants = new List<Restaurant>();
+        //}
     }
 }

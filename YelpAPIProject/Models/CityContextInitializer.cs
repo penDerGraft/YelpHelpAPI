@@ -44,7 +44,9 @@ namespace YelpAPIProject.Models
                         rest.name = (string)jRes["name"];
                         rest.rating = (float)jRes["rating"];
                         rest.category = cats;
-                        rest.address = string.Join(" ", addr);                        
+                        rest.address = string.Join(" ", addr);
+                        rest.latitude = (double)jRes["location"]["coordinate"]["latitude"];
+                        rest.longitude = (double)jRes["location"]["coordinate"]["longitude"];
 
                         restaurants.Add(rest);
                         newCity.restaurants.Add(rest);

@@ -11,9 +11,11 @@ namespace YelpAPIProject.Models
         public string name { get; set; }
         public float rating { get; set; }
         public string category { get; set; }
+        public string city { get; set; }        
         public string address { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
+        public string imageURL { get; set; }
 
 
     }

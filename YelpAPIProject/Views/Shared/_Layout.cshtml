@@ -7,28 +7,29 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcGjGeAqE3n5cx7e2dtL3-FoMDMFibi-8"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
-<body>
-    @*<header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a href="~/">Yelp API Visualizer</a></p>
-            </div>
-            <div class="float-right">
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>*@
-    @RenderBody()
-
+<body>    
+        @*<header>
+                <div class="content-wrapper">
+                    <div class="float-left">
+                        <p class="site-title">
+                            <a href="~/">Yelp API Visualizer</a></p>
+                    </div>
+                    <div class="float-right">
+                        <nav>
+                            <ul id="menu">
+                                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>*@
+        @RenderBody()
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
 

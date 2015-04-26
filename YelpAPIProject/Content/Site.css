@@ -9,3 +9,15 @@ body {
     margin: 0; 
     padding: 0;
 }
+
+#delete-btn {
+    margin-left: 10px;
+}
+
+#navbar {
+    margin-bottom: 0;
+}
+
+label {
+    margin-top: 5px;
+}

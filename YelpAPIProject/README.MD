@@ -3,7 +3,7 @@
 ##Collaborators 
 Jake Tansey and Brent Pendergraft
 
-1. Repo URL: https://github.com/penDerGraft/YelpHelpAPI
+1. Repo URL: https://github.com/penDerGraft/YelpHelpAPI/tree/master/YelpAPIProject
 2. Available Web Service Calls: API/Restaurants
 	- GET all ('/')
 	- GET one ('/id')

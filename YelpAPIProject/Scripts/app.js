@@ -25,6 +25,26 @@
 //    });
 //});
 
+
+
+
+
+
+var map;
+var markers = [];
+
+$(function () {
+    $("#post-btn").click(postNewRestaurant);
+    $("#search-rating").click(getByRating);
+    $("#search-name-btn").click(getByName);
+    $("#search-cat-btn").click(getByCategory);
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+})
+
+//==== CRUD Functions =====================================================================================================
+
+//GET one
 function showDetails(id) {
     $.getJSON('api/Restaurants/' + id).done(function (data) {
         $("#map-canvas").hide();
@@ -57,6 +77,7 @@ function showDetails(id) {
     });
 }
 
+//POST
 function postNewRestaurant() {
     var $name = $("#rest-name").val();
     var $category = $("#category").val();
@@ -85,6 +106,7 @@ function postNewRestaurant() {
         data: data,
         success: function (result) {
             console.log("It worked");
+            getAllRestaurants();
         },
         error: function (jqXHR, textStatus, err) {
             console.log('Error: ' + err);
@@ -92,6 +114,7 @@ function postNewRestaurant() {
     });
 }
 
+//PUT
 function updateRestaurant(id, rating, lat, long, URL) {
 
     var $name = $("#up-rest-name").val();
@@ -130,6 +153,7 @@ function updateRestaurant(id, rating, lat, long, URL) {
     });
 }
 
+//DELETE
 function deleteRestaurant(id) {
     $.ajax({
         url: '/api/Restaurants/'+ id,
@@ -145,45 +169,96 @@ function deleteRestaurant(id) {
 
 }
 
+//Helper for GET queries
+function getRestaurants(path) {
+    $.getJSON('api/Restaurants' + path).done(function (data) {
+        clearMarkers();
+        $.each(data, function (key, rest) {
+            var myLatlng = new google.maps.LatLng(rest.latitude, rest.longitude);
+
+            var contentString = '<div id="content">' +
+            '<h1 id="firstHeading" class="firstHeading">' + rest.name + '</h1>' +
+            '<div id="bodyContent"><p>' + rest.category +'</p>' +
+            '<img src="' + rest.ratingURL + '"><br>' +
+            '<a href="#" class="pull-right" onclick=showDetails(' + rest.ID + ')>See Restaurant Details</a> ' +
+            '</div></div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: rest.name
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            })
+
+            markers.push(marker);
+            // To add the marker to the map, call setMap();           
+        })
+        showMarkers();
+    })
+    .fail(function (jqXHR, textStatus, err) {
+        console.log('Error: ' + err);
+    });
+}
+
+//'?name=' + (encodeURIComponent("Little Rock"))
+function getAllRestaurants() {
+    getRestaurants('/');
+}
+
+function getByRating() {
+    $rating = $('#nav-rest-rating').val();
+    console.log($rating);
+
+    getRestaurants('?rating=' + $rating);
+}
+
+function getByName() {
+    $name = $('#search-name').val()
+    getRestaurants('?name=' + (encodeURIComponent($name)));
+}
+
+function getByCategory() {
+    $cat = $('#search-cat').val()
+    getRestaurants('?category=' + $cat);
+}
+
+//==== MAP API Functions =====================================================================================================
+
 function initialize() {
+
     var mapOptions = {
-        center: { lat: 39.203315, lng: -95.419616 },
-        zoom: 5
+        center: { lat: 35.246819, lng: -91.733688 },
+        zoom: 13
     };
 
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-    //$.getJSON function should go here. 
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+    //var center = new google.maps.LatLng(35.246819, -91.733688);
 
-    var myLatlng = new google.maps.LatLng(35.246819, -91.733688);
-    var mapOptions = {
-        zoom: 4,
-        center: myLatlng
-    }
-
-    var contentString = '<div id="content">'+
-    '<h1 id="firstHeading" class="firstHeading">Searcy</h1>'+
-    '<a href="#" onclick=showDetails(18)>See Restaurant Details</a> '+
-    '</div>';
-
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title: 'Searcy, AR'
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
-    });
-
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
-
-    $("#post-btn").click(postNewRestaurant);
-    
+    //Start with all restaurant markers on map
+    getAllRestaurants();
 }
-google.maps.event.addDomListener(window, 'load', initialize);
+
+function setAllMap(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }   
+}
+
+function showMarkers() {
+    setAllMap(map);
+}
+
+function clearMarkers() {
+    setAllMap(null);
+    markers = [];
+}
+
+

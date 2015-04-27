@@ -16,6 +16,7 @@ namespace YelpAPIProject.Models
         public double latitude { get; set; }
         public double longitude { get; set; }
         public string imageURL { get; set; }
+        public string ratingURL { get; set; }
 
 
     }

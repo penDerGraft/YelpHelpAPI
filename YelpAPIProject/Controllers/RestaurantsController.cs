@@ -34,6 +34,37 @@ namespace YelpAPIProject.Controllers
             return restaurant;
         }
 
+        // GET /api/Restaurants?rating=3.0
+        public IEnumerable<Restaurant> GetRestaurantByRating(float rating)
+        {
+            var restaurants = from r in db.Restaurants
+                              where r.rating >= rating
+                              select r;
+            return restaurants;
+        }
+
+        // GET /api/Restaurants?name=someName
+        public IEnumerable<Restaurant> GetRestaurantByName(string name)
+        {
+            var restaurants = from r in db.Restaurants
+                              where r.name.StartsWith(name) ||
+                                    r.city.StartsWith(name) ||
+                                    r.name.Contains(name)   ||
+                                    r.city.Contains(name) 
+                              select r;
+            return restaurants;
+        }
+
+        // GET /api/Restaurants?category=someCat
+        public IEnumerable<Restaurant> GetRestaurantByCategory(string category)
+        {
+            var restaurants = from r in db.Restaurants
+                              where r.category.StartsWith(category) ||
+                                    r.category.Contains(category)                                    
+                              select r;
+            return restaurants;
+        }
+
         // PUT api/Restaurants/5
         public HttpResponseMessage PutRestaurant(int id, Restaurant restaurant)
         {

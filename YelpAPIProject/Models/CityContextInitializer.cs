@@ -49,6 +49,7 @@ namespace YelpAPIProject.Models
                         rest.latitude = (double)jRes["location"]["coordinate"]["latitude"];
                         rest.longitude = (double)jRes["location"]["coordinate"]["longitude"];
                         rest.imageURL = (string)jRes["image_url"];
+                        rest.ratingURL = (string)jRes["rating_img_url"];
 
                         restaurants.Add(rest);
                         newCity.restaurants.Add(rest);

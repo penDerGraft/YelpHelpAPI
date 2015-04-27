@@ -21,3 +21,7 @@ body {
 label {
     margin-top: 5px;
 }
+
+.rating-label {
+    color: #999;
+}
